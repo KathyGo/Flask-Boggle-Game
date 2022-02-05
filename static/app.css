@@ -1,0 +1,16 @@
+table {
+	text-align: center;
+	margin-left: 35%;
+	/* margin-right: auto; */
+}
+
+td {
+	padding: 0;
+	margin: 0;
+	height: 80px;
+	width: 80px;
+}
+
+#boggle-board {
+	margin-top: 50px;
+}
