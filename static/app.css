@@ -1,16 +1,26 @@
 table {
 	text-align: center;
-	margin-left: 35%;
-	/* margin-right: auto; */
+	margin-left: auto;
+	margin-right: auto;
 }
 
 td {
 	padding: 0;
 	margin: 0;
-	height: 80px;
-	width: 80px;
+	height: 60px;
+	width: 60px;
+}
+
+#guess-form {
+	margin-left: 30%;
+	margin-right: 30%;
 }
 
 #boggle-board {
 	margin-top: 50px;
+}
+
+.new_record {
+	color: green;
+	font-size: 1.5rem;
 }
