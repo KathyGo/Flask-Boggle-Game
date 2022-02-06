@@ -1,6 +1,6 @@
 let score = 0;
 const guessed = [];
-let sec = 59;
+let sec = 60;
 
 async function submitWordToServer(evt) {
 	evt.preventDefault();
@@ -33,16 +33,14 @@ async function submitWordToServer(evt) {
 }
 
 function myTimer() {
-	setTimeout(stopTimer, 60000);
-	function stopTimer() {
-		clearInterval(intervalId);
-		// $('#guess-form').off('submit', submitWordToServer);
-		alert('Time Out!');
-		$('#submit-btn').addClass('disabled');
-		updatePlayerDetails();
-	}
 	let intervalId = setInterval(function() {
 		sec = sec - 1;
+		if (sec === 0) {
+			clearInterval(intervalId);
+			// $('#guess-form').off('submit', submitWordToServer);
+			$('#submit-btn').addClass('disabled');
+			updatePlayerDetails();
+		}
 		$('#timer').text(`Timer: ${sec}s`);
 	}, 1000);
 }
