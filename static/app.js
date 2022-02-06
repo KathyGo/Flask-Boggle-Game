@@ -1,8 +1,6 @@
 let score = 0;
 const guessed = [];
-let sec = 60;
-let highestScore = localStorage.getItem('highestScore');
-let count = parseInt(localStorage.getItem('play_count'));
+let sec = 59;
 
 async function submitWordToServer(evt) {
 	evt.preventDefault();
@@ -35,42 +33,30 @@ async function submitWordToServer(evt) {
 }
 
 function myTimer() {
-	let intervalId = setInterval(function() {
-		sec = sec - 1;
-		$('#timer').text(`Timer: ${sec}s`);
-	}, 1000);
 	setTimeout(stopTimer, 60000);
 	function stopTimer() {
 		clearInterval(intervalId);
 		// $('#guess-form').off('submit', submitWordToServer);
 		alert('Time Out!');
-		if (!count) {
-			count = 0;
-		}
-		count += 1;
 		$('#submit-btn').addClass('disabled');
 		updatePlayerDetails();
 	}
+	let intervalId = setInterval(function() {
+		sec = sec - 1;
+		$('#timer').text(`Timer: ${sec}s`);
+	}, 1000);
 }
 
 async function updatePlayerDetails() {
-	if (!highestScore) {
-		highestScore = 0;
-	}
-
-	highestScore = score > highestScore ? score : highestScore;
-	localStorage.setItem('highestScore', highestScore);
-	localStorage.setItem('play_count', count);
 	const res = await axios({
-		url: 'http://localhost:5000/',
+		url: 'http://localhost:5000/update-score',
 		method: 'POST',
-		data: { highestScore, count }
+		data: { score }
 	});
-}
-
-async function loadGame() {
-	const res = await axios.get('http://localhost:5000/');
-	console.log(res.data);
+	if (res.data.newRecord) {
+		$('#msg').text(`Congratulations! New Record: ${score}!`).removeClass().addClass('new_record text-center mt-2');
+		$('#best-score').text(`Best Score: ${score}`);
+	}
 }
 
 myTimer();
