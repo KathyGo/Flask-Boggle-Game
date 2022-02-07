@@ -14,6 +14,8 @@ class MyTest(TestCase):
         html = resp.get_data(as_text=True)
         self.assertEqual(resp.status_code, 200)
         self.assertIn('Boggle Board', html)
+        self.assertIsNone(session.get('best_score'))
+        self.assertIsNone(session.get('play_count'))
 
     def test_update_play_details(self):
         """Test update_play_details and verify return if the post score is the best score"""
